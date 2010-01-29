@@ -1,0 +1,30 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+  xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+
+  <ui:style>
+  .panel {
+    padding: 10px;
+ 	}
+
+  .aboutText {
+    text-align: left;
+    color:#333333;
+  }
+
+
+  .buttons {
+    text-align: right;
+  }
+  </ui:style>
+
+  <g:HTMLPanel width='24em' styleName='style_panel'>
+       Hello, <g:ListBox ui:field='listBox' visibleItemCount='1'/>.
+         
+    <g:Image ("http://connector.imhonet.ru/img/rate_null.gif")/>
+    <div class='{style.buttons}'>
+      <g:Button text='Close' ui:field='closeButton' />
+      <g:Button text='Open' ui:field='openButton' />
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>
