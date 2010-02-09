@@ -15,22 +15,13 @@ private native JavaScriptObject defs () /*-{
 	return $wnd.wimho.get_defs();
 }-*/;
 
-public final String getIdx2Rate ( int idx ) {
+private native JavaScriptObject idx2rate ( int idx ) /*-{
+	return $wnd.wimho.idx2rate(idx)
 	
-	JsProperties ind = new JsProperties (this.defs());
-	JsProperties rate_ref = ind.getJsProperties("rate_custom");
-	String[] names = rate_ref.keys();
-	String res = "";
-    for (String name : names) { 
-	     //  res +=" "+name+ " " + rate_ref.get(name).getClass().toString()+"</br>";
-    	  res +=" "+name;
-	    }
+}-*/;
 
-	return res; 
-	//JSONArray jaray ;
-	//ind.getJsProperties()
-	//return  ind.getJsProperties("rate_custom").;
-	//return  ind.getJsProperties("encode");
+public final JsProperties  getIdx2Rate ( int idx ) {
+	return new JsProperties(this.idx2rate(idx));
 }
 
 }

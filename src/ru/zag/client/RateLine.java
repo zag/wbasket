@@ -24,6 +24,7 @@ import static com.google.gwt.query.client.GQuery.lazy;
 
 public  class RateLine  extends Composite  {
 	private int RatesCount = 0;
+	private int current_idx = 0;
 	private String soid;
 	private HorizontalPanel horizpanel = new HorizontalPanel();
 	private Element rate_container;
@@ -33,9 +34,9 @@ public  class RateLine  extends Composite  {
 		RatesCount = count;
 		soid = soid_id;
 		rate_container = DOM.createDiv();
-		rate_container.setId("Arate_cnt_"+ soid);
+		rate_container.setId("rate_cnt_"+ soid);
 		horizpanel.getElement().appendChild(rate_container);
-		GQuery query = MakeQForRate( RatesCount, 1).
+		GQuery query = MakeQForRate( RatesCount,0).
 	  		  mouseover(new Function() {
 	              @Override
 	              public boolean f(Event e) {
@@ -46,6 +47,29 @@ public  class RateLine  extends Composite  {
 	            });
 	  GQuery cont = new GQuery(rate_container);
 	  cont.append(query);
+	  Log.fire("-init Widget");
+		initWidget(horizpanel);
+		Log.fire("init Widget");
+		
+	}
+
+	private GQuery MakeQForRate(int count,int rate) {
+		GQuery query = $("<ul class='imhonet-rating'>"
+				+"<li class='current-rating' style='width:"+(100/count)*rate+"%;'>stars</li>"
+				+"</ul>");
+	   for (int i = 1; i <= count ; i++) {
+		   String title = i+" stars out of "+count;
+		   GQuery li = $("<li class='imhonet_star'><a href='#' title='"+
+				   title
+				   +"' class='star_"+i+"'>"+i
+		   +"</a></li>");
+		   li.data("idx", i);
+		   query.append(li);
+	        }
+		return query;
+	}
+public void initRateLine ( int idx ) {
+	current_idx= idx;
 	  $(".imhonet_star",rate_container ).
 	  click(new Function() {
 	      @Override
@@ -68,33 +92,23 @@ public  class RateLine  extends Composite  {
           }).mouseout(new Function() {
               @Override
               public boolean f(Event e) {
-    	    	  Integer num =  (Integer) $(e).data("idx");
-           	 handlerList.fireEvent(new RateLineMouseOutEvent( num ) );
+    	    	  //Integer num =  (Integer) $(e).data("idx");
+           	 handlerList.fireEvent(new RateLineMouseOutEvent( current_idx ) );
                 return true;
               }
             });
-	  Log.fire("-init Widget");
-		initWidget(horizpanel);
-		Log.fire("init Widget");
-		
-	}
+	
+}
+// 0, 1..10 ; 0 - empty rate
+public void setIdx(int idx) {
+	//setup current index
+	current_idx= idx;
+    int percents = (int) Math.floor(100/RatesCount)*(idx);
+	$(".current-rating",rate_container ).css("width",percents + "%");
+	String view = idx == 0 ?"hidden":"visible";
+	$(".delete_rate", rate_container).css("visibility", view);
 
-	private GQuery MakeQForRate(int count,int rate) {
-		GQuery query = $("<ul class='imhonet-rating'>"
-				+"<li class='current-rating' style='width:"+(100/count)*rate+"%;'>stars</li>"
-				+"</ul>");
-	   for (int i = 1; i <= count ; i++) {
-		   String title = i+" stars out of "+count;
-		   GQuery li = $("<li class='imhonet_star'><a href='#' title='"+
-				   title
-				   +"' class='star_"+i+"'>"+i
-		   +"</a></li>");
-		   li.data("idx", i);
-		   query.append(li);
-	        }
-		return query;
-	}
-
+}
 @Override
 protected void onAttach() {
   Log.fire("+OnAttach");

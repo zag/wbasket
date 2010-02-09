@@ -60,7 +60,7 @@ public class Popup  implements Exportable {
 			}
 		});
 		HTMLPanel hpanel =new HTMLPanel(MakeStrForRate( 5, 2, soid));
-		container.add(uploader );
+		//container.add(uploader );
 		  RateLine = new RateWidget( vars);
 		  //RateLine = new RateWidget( "able", "baker", "charlie");
 		container.add(RateLine);

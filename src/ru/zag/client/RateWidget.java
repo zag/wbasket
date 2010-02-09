@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.resources.client.ClientBundle;
@@ -59,17 +60,29 @@ public class RateWidget extends Composite implements  RateLineClickHandler, Rate
 	
  private JsProperties jsProp;
  private jsAttr attributes;
+ private RateLine rate_line;
  Resource resources = GWT.create(Resource.class);
   private FlowPanel activity = new FlowPanel();
   private Element status_line = DOM.createElement("p");
+  private Label fetchJsonpResultsLabel = new Label("json label");
+  private static final String JSONP_URL =
+      "http://spreadsheets.google.com/feeds/"
+      + "list/"
+      + "o01639138815242963973.2576643066438841202"
+      + "/"
+      + "od6"
+      + "/public/values"
+      + "?alt=json-in-script&callback=";
+
   public RateWidget (jsAttr prop ) {
 	  this.jsProp = new JsProperties(prop);
 	  attributes = prop;
  	  FlexTable t = new FlexTable();
-	  RateLine rate_line = new RateLine(10, jsProp.get("soid"));
+	  rate_line = new RateLine(10, jsProp.get("soid"));
 	  rate_line.addClickHandler(this);
 	  rate_line.addMouseOutHandler(this);
 	  rate_line.addMouseOverHandler(this);
+	  rate_line.initRateLine(0);
 	  t.setWidget(0,0,rate_line);
 	  FlowPanel fp = new FlowPanel();
 	  fp.setStyleName("delete_rate");
@@ -99,24 +112,83 @@ public class RateWidget extends Composite implements  RateLineClickHandler, Rate
 	  status_line.setId("rate_p_"+jsProp.get("soid"));
 	  status_line.getStyle().setProperty("height","1em");
 	  container.getElement().appendChild(status_line);
-	  status_line.setInnerText("test");
+	  status_line.setInnerText(" ");
+	  container.add(fetchJsonpResultsLabel);
+	  String url = JSONP_URL;
+	  fetchJsonpResultsLabel.setText(url);
+	  //fetchJsonpStockData(JSONP_URL, RateWidget.this);
 	  initWidget(container);
   }
 @Override
 public void RateClicked(RateLineClickEvent event) {
 	// TODO Auto-generated method stub
 	Window.alert("click"+ event.getIndex());
+	rate_line.setIdx(event.getIndex());
 }
 @Override
 public void RateMouseOut(RateLineMouseOutEvent event) {
-	// TODO Auto-generated method stub
-	status_line.setInnerText("out"+ event.getIndex());
+	status_line.setInnerText(attributes.getIdx2Rate(event.getIndex()).get("text"));
 }
 @Override
 public void RateMouseOver(RateLineMouseOverEvent event) {
-	// TODO Auto-generated method stub
-	status_line.setInnerText("over"+attributes.getIdx2Rate(event.getIndex()));
-	//status_line.setInnerText("over"+ event.getIndex());
+	status_line.setInnerText(attributes.getIdx2Rate(event.getIndex()).get("text"));
 }
+
+/**
+ * Make call to remote server.
+ */
+public native static void fetchJsonpStockData( String url,
+		RateWidget handler) /*-{
+  var callback ;
+do
+{
+callback = "callback" + Math.ceil( Math.random() * 100 )
+
+}
+while ( window[callback]);
+  // [1] Create a script element.
+  var script = document.createElement("script");
+  script.setAttribute("src", url+callback);
+  script.setAttribute("type", "text/javascript");
+
+  // [2] Define the callback function on the window object.
+  window[callback] = function(jsonObj) {
+    // [3]
+    handler.@ru.zag.client.RateWidget::handleJsonResponse(Lcom/google/gwt/core/client/JavaScriptObject;)(jsonObj);
+    window[callback + "done"] = true;
+  }
+
+  // [4] JSON download has 1-second timeout.
+  setTimeout(function() {
+    if (!window[callback + "done"]) {
+      handler.@ru.zag.client.RateWidget::handleJsonResponse(Lcom/google/gwt/core/client/JavaScriptObject;)(null);
+    }
+
+    // [5] Cleanup. Remove script and callback elements.
+    document.body.removeChild(script);
+    delete window[callback];
+    delete window[callback + "done"];
+  }, 1000);
+
+  // [6] Attach the script element to the document body.
+  document.body.appendChild(script);
+}-*/;
+
+/**
+ * Handle the response to the request for stock data from a remote server.
+ */
+public void handleJsonResponse(JavaScriptObject jso) {
+  if (jso == null) {
+    displayJsonpError("Couldn't retrieve JSON");
+    return;
+  }
+
+  fetchJsonpResultsLabel.setText(jso.toString());
+}
+
+private void displayJsonpError(String error) {
+  fetchJsonpResultsLabel.setText("ERROR: " + error);
+}
+
 
 }

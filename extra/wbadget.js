@@ -46,7 +46,7 @@ if (! __WIMHO_JS_INCLUDED) {
         if( inlevel ) {
             this.loglevel = inlevel
         }
-    }
+    };
 
     /**
      * Time Counter class
@@ -88,7 +88,7 @@ if (! __WIMHO_JS_INCLUDED) {
     };
 
 //    GWanted.__GWANTED_JS_LOAD_START_TIME = new LogTimer(true);
-    wimho.log =new LogFirebug( 0);
+    wimho.log =new LogFirebug( 2);
 //    GWanted.Version = '0.0.4';
     
     wimho.loadedModules  = [];
@@ -198,7 +198,7 @@ if (! __WIMHO_JS_INCLUDED) {
 	    imhonet_rate_berror : JS_HOST+'/img/ajax_error_b.gif',
             imhonet_rate_serror : JS_HOST+'/img/ajax_error_s.gif',
             encode : 'utf8',
-            rate_custom : [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]
+            rate_custom : [[0],[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]]
         };
         var cust = {};
         if (window.imhonet_rate_bstars)
@@ -223,6 +223,29 @@ if (! __WIMHO_JS_INCLUDED) {
         }
         wimho.extend( defs, cust);
         return defs;
+    };
+
+    wimho.actual_rate_scale = function(scale ) {
+        var pr = scale || wimho.get_defs().rate_custom;
+        var actual_scale = [];
+        var num=0;
+        for (i = 0; i < pr.length ; i++)  {
+            var str = pr[i][0] ;
+            //if ( str && typeof str == "number" )  { actual_scale.push(pr[i])}
+            if ( str && ( typeof str == "number" || str.match(/[-\d]+/) ) )   { actual_scale.push(pr[i])}
+        }
+        return actual_scale;
+
+    };
+    wimho.idx2rate = function  ( idx ) {
+        var pr =  wimho.get_defs().rate_custom;
+        if ( idx > 0 ) {
+            pr = wimho.actual_rate_scale(pr);
+            idx--;
+        }
+        var value = pr[idx][0];
+        var text =  pr[idx][1];
+        return { 'value': value, 'text': text };
     };
 
     /* Run */
@@ -259,10 +282,10 @@ if (! __WIMHO_JS_INCLUDED) {
     wimho.isModuleLoaded=function () { return false};
     wimho.onWBasket1= function () {
             this.log.info("onWBasket")
-    }
+    };
 
     wimho.onWBasket = function () {
-         this.log.info("onWBasket")
+         this.log.info("onWBasket");
         var pendingCreate;
         var i = 0;
         this.log.info('Pending count: '+this.pendingCreates.length);

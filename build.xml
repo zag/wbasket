@@ -45,13 +45,14 @@
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx256M"/>
-      
-<!--      <arg value="-style"/>
+<!--pretty -->
+      <arg value="-style"/>
       <arg value="PRETTY"/>
-      <arg value="-draftCompile"/> -->
+      <arg value="-draftCompile"/> 
       
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
       <arg value="ru.zag.Alert2"/>
+<!--      <arg line="-war 1"/>  -->
     </java>
   </target>
 
@@ -77,7 +78,7 @@
 
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
-    <delete dir="war/alert2" failonerror="false" />
+    <delete dir="war/wset" failonerror="false" />
   </target>
 
 </project>
