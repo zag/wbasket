@@ -23,7 +23,7 @@
   <source path="my/package/gwt"/>
   <stylesheet src="gwt.css"/>
 -->
-    <script src="wbadget.js" />
+<!--     <script src="wbadget.js" /> -->
   <!-- Specify the app entry point class.                         -->
   <entry-point class='ru.zag.client.Alert2'/>
 </module>

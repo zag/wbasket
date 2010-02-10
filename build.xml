@@ -45,11 +45,11 @@
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx256M"/>
-<!--pretty -->
+<!--pretty 
       <arg value="-style"/>
       <arg value="PRETTY"/>
       <arg value="-draftCompile"/> 
-      
+-->      
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
       <arg value="ru.zag.Alert2"/>
 <!--      <arg line="-war 1"/>  -->

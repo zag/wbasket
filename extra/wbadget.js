@@ -11,7 +11,13 @@ if (window.GWanted === undefined) {
 
 if (window.wimho === undefined) {
     window.wimho   = {};
-    JS_HOST="";
+    if (typeof JS_HOST == "undefined" ) {
+        JS_HOST="http://connector.imhonet.ru"
+    }
+    if (typeof JS_API_PATH == "undefined" ) {
+        JS_API_PATH=JS_HOST+'/distrib_api'
+    }
+
 }
 if (window.wimho.commonUrl === undefined) {
     wimho.commonUrl    = '';
