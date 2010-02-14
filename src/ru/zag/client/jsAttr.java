@@ -24,4 +24,17 @@ public final JsProperties  getIdx2Rate ( int idx ) {
 	return new JsProperties(this.idx2rate(idx));
 }
 
+public final native String getInitRateWidgetUrl() /*-{
+return $wnd.wimho.get_rate_init_url(this);
+}-*/;
+
+public final native String getPostRateWidgetUrl( int Rate) /*-{
+return $wnd.wimho.get_post_url(this, Rate);
+}-*/;
+
+
+public final native int getRate2Idx( String rate ) /*-{
+return $wnd.wimho.rate2idx(rate);
+}-*/;
+
 }

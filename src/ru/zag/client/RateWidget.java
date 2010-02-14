@@ -4,11 +4,14 @@ import org.eclipse.jdt.internal.compiler.flow.FlowContext;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -58,24 +61,25 @@ public class RateWidget extends Composite implements  RateLineClickHandler, Rate
 		  }
 */
 	
- private JsProperties jsProp;
+ private JsWidgetParams jsProp;
  private jsAttr attributes;
  private RateLine rate_line;
  Resource resources = GWT.create(Resource.class);
   private FlowPanel activity = new FlowPanel();
   private Element status_line = DOM.createElement("p");
   private Label fetchJsonpResultsLabel = new Label("json label");
-  private static final String JSONP_URL =
+  /*private static final String JSONP_URL =
       "http://spreadsheets.google.com/feeds/"
       + "list/"
       + "o01639138815242963973.2576643066438841202"
       + "/"
       + "od6"
       + "/public/values"
-      + "?alt=json-in-script&callback=";
+      + "?alt=json-in-script&callback="; */
+  private static final String JSONP_URL = "http://connector.imhonet.ru/distrib_api/50bbeadaa17f02e1fdf9f216af1e79b6/1210753367/37427125/1410/w_rate.json?on_get_rate=1&keywords=85174";
 
   public RateWidget (jsAttr prop ) {
-	  this.jsProp = new JsProperties(prop);
+	  this.jsProp = new JsWidgetParams(prop);
 	  attributes = prop;
  	  FlexTable t = new FlexTable();
 	  rate_line = new RateLine(10, jsProp.get("soid"));
@@ -114,7 +118,21 @@ public class RateWidget extends Composite implements  RateLineClickHandler, Rate
 	  container.getElement().appendChild(status_line);
 	  status_line.setInnerText(" ");
 	  container.add(fetchJsonpResultsLabel);
-	  String url = JSONP_URL;
+	  JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+	  
+	  String url = prop.getInitRateWidgetUrl();
+	  jsonp.requestObject(url,
+			     new AsyncCallback<JavaScriptObject>() {
+			       public void onFailure(Throwable throwable) {
+			         Log.fire("Error: " + throwable);
+			       }
+
+			       public void onSuccess(JavaScriptObject ans) {
+			    	   JsArray<JavaScriptObject> attr = (JsArray<JavaScriptObject>) ans;
+			    	   JsProperties jsProp = new JsProperties(attr.get(0));
+			    	   rate_line.setIdx( attributes.getRate2Idx(jsProp.get("current_rate")) );
+			       }
+			     });
 	  fetchJsonpResultsLabel.setText(url);
 	  //fetchJsonpStockData(JSONP_URL, RateWidget.this);
 	  initWidget(container);
@@ -122,8 +140,24 @@ public class RateWidget extends Composite implements  RateLineClickHandler, Rate
 @Override
 public void RateClicked(RateLineClickEvent event) {
 	// TODO Auto-generated method stub
-	Window.alert("click"+ event.getIndex());
-	rate_line.setIdx(event.getIndex());
+	 //Window.alert("click"+ event.getIndex());
+	  JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+	  String url = attributes.getPostRateWidgetUrl( attributes.getIdx2Rate(event.getIndex()).getInt("value") );
+	  
+	  jsonp.requestObject(url,
+			     new AsyncCallback<JavaScriptObject>() {
+			       public void onFailure(Throwable throwable) {
+			         Log.fire("Error: " + throwable);
+			       }
+
+			       public void onSuccess(JavaScriptObject ans) {
+			    	   //JsArray<JavaScriptObject> attr = (JsArray<JavaScriptObject>) ans;
+			    	   //JsProperties jsProp = new JsProperties(attr.get(0));
+			    	   //rate_line.setIdx( attributes.getRate2Idx(jsProp.get("current_rate")) );
+			       }
+			     });
+
+	   rate_line.setIdx(event.getIndex());
 }
 @Override
 public void RateMouseOut(RateLineMouseOutEvent event) {
@@ -133,6 +167,7 @@ public void RateMouseOut(RateLineMouseOutEvent event) {
 public void RateMouseOver(RateLineMouseOverEvent event) {
 	status_line.setInnerText(attributes.getIdx2Rate(event.getIndex()).get("text"));
 }
+
 
 /**
  * Make call to remote server.

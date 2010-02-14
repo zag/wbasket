@@ -79,7 +79,7 @@ public void initRateLine ( int idx ) {
 	        //$(e).addClass("star-rating-click").data("testpar",1);
         	 //Integer in = new Integer("");
         	 //in.
-	        Log.fire("sadasd"+ $(e).getClass().getName()+ ":a data = "+ num );
+	       Log.fire("sadasd"+ $(e).getClass().getName()+ ":a data = "+ num );
 	        return true;
 	      }
 	    }).mouseover(new Function() {
