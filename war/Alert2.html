@@ -92,7 +92,7 @@ src="http://connector.imhonet.ru/js/inc.js"></script>
             onload: function( p ) { alert (this) }
     };
 //    imhonet_rate_print( lvars, document.getElementById('testcon'));
-    imhonet_rate_print( lvars, 'testcon1');
+//    imhonet_rate_print( lvars, 'testcon1');
 
     </script>
     <table align="center">
@@ -106,11 +106,12 @@ src="http://connector.imhonet.ru/js/inc.js"></script>
     </table>
     <script type="text/javascript" language="javascript">
        var lvars = { 
-            cid: '1166810273',
-            ssid: '2007061185867456052',
-            soid: '555',
-            sign: '1aff8937b79f9fb77dc3478e98bc853d',
-            onload: function( p ) { alert (this) }
+            cid: '1210753367',
+            ssid: '37427125',
+            soid: '1410',
+            sign: '50bbeadaa17f02e1fdf9f216af1e79b6',
+            onload: function( p ) { alert (this) },
+            on_get_rate: function( p ) { alert (this) }
     };
     imhonet_rate_print( lvars, 'testcon2');
 //    imhonet_rate_print( {},'' );
