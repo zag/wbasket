@@ -1,0 +1,20 @@
+<module>
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+
+    <!-- Inherit the core GWanTed stuff.                    
+    <inherits name="org.gwanted.gwt.core.module"/> 
+    <inherits name="org.gwanted.gwt.widget.shadowpanel.module"/> -->
+
+    <!-- Inherit the GWT Widgets                    
+    <inherits name="org.gwtwidgets.WidgetLibrary" />
+    --> 
+
+    <!-- Inherit the XML Parser                  -->
+    <inherits name="com.google.gwt.xml.XML" />
+
+    <!-- Specify the app entry point class.                   -->
+<!--    <entry-point class='org.gwanted.gwt.widget.popup.client.ui.Module'/> -->
+
+</module>
