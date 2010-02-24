@@ -29,7 +29,7 @@ public class Alert2 implements EntryPoint {
   }
   private native void onLoadImpl() /*-{
       if ($wnd.jscOnLoad && typeof $wnd.jscOnLoad == 'function') $wnd.jscOnLoad();
-      if ($wnd.wimho && typeof $wnd.wimho.onWBasket == 'function') $wnd.wimho.onWBasket();
+      if ($wnd.wimho && typeof $wnd.WBasket.onWBasket == 'function') $wnd.WBasket.onWBasket();
    }-*/; 
 	  
   /*

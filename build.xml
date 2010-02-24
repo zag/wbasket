@@ -5,7 +5,6 @@
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
-<!--    <pathelement location="/home/zag/Work/gwt/WBasket/src"/> -->
 
     <pathelement location="${gwt.sdk}/gwt-user.jar"/>
 <!--	<pathelement location="lib/gwtexporter2alpha.jar"/> -->

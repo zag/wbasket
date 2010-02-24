@@ -18,4 +18,15 @@ war/wset/wset.nocache.js_2: war/wset/wset.nocache.js
 	war/wset/wimho.js \
 	war/wset/wset.nocache.js  > $@
 
-pack_all: war/wset/wset.nocache.js_2
+war/wset/wimho.nopacked.js:
+	cat war/wset/wbadget.js \
+	war/wset/wimho.js  > $@
+
+war/wset/wimho.packed.js: war/wset/wimho.nopacked.js
+	cat war/wset/wimho.nopacked.js | perl -I/home/zag/Work/projects/tmp/in_data/packer \
+	/home/zag/Work/projects/tmp/in_data/packer/jsPacker.pl -e20 -fq -i -  > $@
+
+pack_all: war/wset/wset.nocache.js_2 war/wset/wset.nocache.js_ war/wset/wimho.packed.js
+#	-@rm -dRf hosted.html *.css wbadget.js wimho.js wset.nocache.js
+
+#	mv war/wset/wset.nocache.js_ war/wset/wset.nocache.js
