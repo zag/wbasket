@@ -4,6 +4,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.Event;
@@ -27,6 +28,7 @@ public  class RateLine  extends Composite  {
 	private int current_idx = 0;
 	private String soid;
 	private HorizontalPanel horizpanel = new HorizontalPanel();
+	
 	private Element rate_container;
     private HandlerManager handlerList = new HandlerManager(null);
 
@@ -35,7 +37,12 @@ public  class RateLine  extends Composite  {
 		soid = soid_id;
 		rate_container = DOM.createDiv();
 		rate_container.setId("rate_cnt_"+ soid);
-		horizpanel.getElement().appendChild(rate_container);
+		horizpanel.addStyleName("PANEL-H");
+		FlowPanel fp = new FlowPanel();
+		fp.addStyleName("FLOW-PANEL");
+		fp.getElement().appendChild(rate_container);
+		horizpanel.add(fp);
+		//horizpanel.getElement().appendChild(rate_container);
 		GQuery query = MakeQForRate( RatesCount,0).
 	  		  mouseover(new Function() {
 	              @Override

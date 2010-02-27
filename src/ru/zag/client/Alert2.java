@@ -21,6 +21,7 @@ public class Alert2 implements EntryPoint {
   public void onModuleLoad() {
 	  ((Exporter) GWT.create(Popup.class)).export();
 	  ((Exporter) GWT.create(Para.class)).export();
+	  ((Exporter) GWT.create(SelectSrc.class)).export();
 	  //((Exporter) GWT.create(SimpleForm.class)).export();
 	  //ExporterUtil.exportAll();
 	  Log.fire("Onload"+ Popup.class);
