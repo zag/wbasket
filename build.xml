@@ -2,6 +2,9 @@
 <project name="Alert2" default="build" basedir=".">
   <!-- Configure path to GWT SDK -->
   <property name="gwt.sdk" location="/usr/home/zag/Work/gwt/gwt-2.0.0" />
+  <property name="build.lib" value="build" />
+   <property file="build.properties" />
+
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
@@ -58,20 +61,6 @@
     </java>
   </target>
 
-  <target name="hosted" depends="javac" description="Run hosted mode">
-    <java failonerror="true" fork="true" classname="com.google.gwt.dev.HostedMode">
-      <classpath>
-        <pathelement location="src"/>
-        <path refid="project.class.path"/>
-      </classpath>
-      <jvmarg value="-Xmx256M"/>
-      <arg value="-startupUrl"/>
-      <arg value="Alert2.html"/>
-      <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
-      <arg value="ru.zag.Alert2"/>
-    </java>
-  </target>
-
   <target name="build" depends="gwtc" description="Build this project" />
 
   <target name="war" depends="build" description="Create a war file">
@@ -82,5 +71,46 @@
     <delete dir="war/WEB-INF/classes" failonerror="false" />
     <delete dir="war/wset" failonerror="false" />
   </target>
+
+    <target name="jar" depends="javac">
+        <echo message="Create jar files..."/>
+        <mkdir dir="${build.lib}"/>
+
+        <!-- gquery.jar -->
+        <jar destfile="${build.lib}/gquery-1z.jar">
+            <fileset dir="${build.classes}">
+                <include name="com/google/gwt/query/**/*.class"/>
+            </fileset>
+            <fileset dir="${src}">
+                <include name="com/google/gwt/query/**/public/**"/>
+                <include name="com/google/gwt/query/**/*.gwt.xml"/>
+                <include name="com/google/gwt/query/**/*.java"/>
+            </fileset>
+        </jar>
+        
+        <!-- wbasket.jar -->
+        <jar destfile="${build.lib}/wbasket-1z.jar">
+            <fileset dir="${build.classes}">
+                <include name="com/google/gwt/wbasket/**/*.class"/>
+            </fileset>
+            <fileset dir="${src}">
+                <include name="com/google/gwt/wbasket/**/public/**"/>
+                <include name="com/google/gwt/wbasket/**/*.gwt.xml"/>
+                <include name="com/google/gwt/wbasket/**/*.java"/>
+            </fileset>
+        </jar>
+
+        <!-- exporter.jar -->
+        <jar destfile="${build.lib}/exporter-1z.jar">
+            <fileset dir="${build.classes}">
+                <include name="org/timepedia/exporter/**/*.class"/>
+            </fileset>
+            <fileset dir="${src}">
+                <include name="org/timepedia/exporter/**/public/**"/>
+                <include name="org/timepedia/exporter/**/*.gwt.xml"/>
+                <include name="org/timepedia/exporter/**/*.java"/>
+            </fileset>
+        </jar>
+    </target>
 
 </project>

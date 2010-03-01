@@ -13,6 +13,8 @@
 
     <!-- Inherit the XML Parser                  -->
     <inherits name="com.google.gwt.xml.XML" />
+     <inherits name="org.timepedia.exporter.Exporter" />
+     
 
     <!-- Specify the app entry point class.                   -->
 <!--    <entry-point class='org.gwanted.gwt.widget.popup.client.ui.Module'/> -->

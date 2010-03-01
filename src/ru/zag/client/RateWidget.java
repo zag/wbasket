@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.ClassName;
+import com.google.gwt.wbasket.client.JsProperties;
 
 /*
  * 

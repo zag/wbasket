@@ -4,6 +4,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.wbasket.client.JsProperties;
 import com.google.gwt.wbasket.client.WBasketPanel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;

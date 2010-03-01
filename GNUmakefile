@@ -1,6 +1,8 @@
-all:  build war/wset/wbadget.js war/wset/inc.js
+all:  builds pack_all jars
 
-build:
+jars:
+	-@env JAVA_HOME=/usr/local/linux-sun-jdk1.6.0 ant jar;
+builds:
 	-@env JAVA_HOME=/usr/local/linux-sun-jdk1.6.0 ant;
 clean:
 	env JAVA_HOME=/usr/local/linux-sun-jdk1.6.0 ant $@

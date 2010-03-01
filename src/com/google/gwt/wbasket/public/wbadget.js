@@ -142,7 +142,7 @@ if ( ! __WBasket_JS_INCLUDED ) {
     create : function (widget, moduleName, container, params, createTimer) {
         var instance, elem;
         try {
-            if (container.gwanted) {
+            if (container.WBasket) {
                 this.log.critic("Container " + container.id + " already has a widget"+
                               "onModuleLoad");
             }
@@ -162,18 +162,18 @@ if ( ! __WBasket_JS_INCLUDED ) {
                 widget.instance = instance;
 
                 //To map all public methods and events to the container
-                container.gwanted = {};
+                container.WBasket = {};
                 for (elem in instance) {
                     if (typeof instance[elem] === 'function') {
 //                        GWanted.addLogger(instance,elem,widgetName);
                     }
-                    container.gwanted[elem] = instance[elem];
+                    container.WBasket[elem] = instance[elem];
                 }
 
                 for (elem in widget) {
                     if (typeof widget[elem] === 'function') {
 //                        GWanted.addLogger(widget,elem,widgetName);
-                        container.gwanted[elem] = widget[elem];
+                        container.WBasket[elem] = widget[elem];
                     }
                 }
 
@@ -223,8 +223,8 @@ if ( ! __WBasket_JS_INCLUDED ) {
         var timer = new LogTimer(true);
 
         var widget                  = new this.Widget(moduleName, container);
-        container.__gwanted         = {};
-        container.__gwanted.widget  = widget;
+        container.__WBasket         = {};
+        container.__WBasket.widget  = widget;
 /*
         for (var property in events) {
             widget[property] = events[property];

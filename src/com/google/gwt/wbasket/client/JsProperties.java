@@ -15,7 +15,7 @@
  * the License.
  */
 
-package ru.zag.client;
+package com.google.gwt.wbasket.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
@@ -24,7 +24,7 @@ public class JsProperties {
 
   JavaScriptObject p = null;
 
-  JsProperties(JavaScriptObject p) {
+  public JsProperties(JavaScriptObject p) {
     this.p = p;
   }
 

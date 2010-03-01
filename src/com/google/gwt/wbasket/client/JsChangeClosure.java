@@ -15,7 +15,7 @@
  * the License.
  */
 
-package ru.zag.client;
+package com.google.gwt.wbasket.client;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportClosure;

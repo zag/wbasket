@@ -1,6 +1,7 @@
 package ru.zag.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.wbasket.client.JsProperties;
 
 public class jsAttr extends JavaScriptObject{
 	// Overlay types always have protected, zero-arg ctors
