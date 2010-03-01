@@ -70,6 +70,7 @@
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
     <delete dir="war/wset" failonerror="false" />
+    <delete dir="${build.lib}" failonerror="false" />
   </target>
 
     <target name="jar" depends="javac">
