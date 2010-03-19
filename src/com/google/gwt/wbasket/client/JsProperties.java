@@ -19,6 +19,7 @@ package com.google.gwt.wbasket.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.json.client.JSONObject;
 
 public class JsProperties {
 
@@ -26,6 +27,9 @@ public class JsProperties {
 
   public JsProperties(JavaScriptObject p) {
     this.p = p;
+  }
+  public JsProperties ( JSONObject p ) {
+	  this.p = p.getJavaScriptObject();
   }
 
   public boolean defined(String name) {
@@ -92,6 +96,9 @@ public class JsProperties {
     }
     return ret;
   }
+  public JavaScriptObject getJavaScriptObject(){
+  	return this.p;
+  }
 
   private static native boolean definedImpl(JavaScriptObject p, String name) /*-{
     return p[name] ? true : false;
@@ -130,4 +137,4 @@ public class JsProperties {
       if (f && o && typeof f == 'function') f(o);
     }-*/;
   }
-}
+ }
